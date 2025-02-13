@@ -1,15 +1,16 @@
 // The SDK provides a client that can be used to carry out the authentication.
-import { AsgardeoAuthClient } from "@asgardeo/auth-js";
+import { AsgardeoAuthClient, type AuthClientConfig, type DefaultAuthClientConfig } from "@asgardeo/auth-js";
 import { jwtVerify as joseJwtVerify, importJWK } from "jose";
 import { Buffer } from "buffer";
 
 // Create a config object containing the necessary configurations.
-const config = {
+const config: AuthClientConfig<DefaultAuthClientConfig>= {
   signInRedirectURL: "http://localhost:5173/",
   signOutRedirectURL: "http://localhost:5173/",
   clientID: "DlhbfqNZEP0CGRN2933Aa1cwoAMa",
   baseUrl: "https://api.asgardeo.io/t/thineth6424",
   enablePKCE: false,
+  scope: ["openid" , "profile"]
 };
 
 // Create a Store class to store the authentication data. The following implementation uses the session storage.

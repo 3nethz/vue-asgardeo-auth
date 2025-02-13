@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TheWelcome from "../components/TheWelcome.vue";
 import { auth } from "@/auth/authservice";
 import { ref } from "vue";
 
@@ -39,6 +40,15 @@ const login = async () => {
   }
 };
 
+const logout = async () => {
+  try {
+    const url = await auth.getSignOutURL();
+    window.location.href = url;
+  } catch (error) {
+    console.error("Logout Failed", error);
+  }
+}
+
 const getUserInfo = async () =>{
   try {
     isAuthenticated.value = await auth.isAuthenticated();
@@ -50,9 +60,6 @@ const getUserInfo = async () =>{
 }
 
 window.addEventListener("load", handleAuthCallback);
-window.addEventListener("load", getUserInfo)
-
-
 </script>
 
 <template>
@@ -62,5 +69,6 @@ window.addEventListener("load", getUserInfo)
     <p v-if="isAuthenticated"> {{ user }}!</p>
     <button @click="login">Login</button>
     <button @click="getUserInfo"> User </button>
+    <button @click="logout">Logout</button>
   </main>
 </template>
